@@ -27,6 +27,8 @@ while game_on:
     time.sleep(cars[0].car_speed)
     for car in cars:
         car.move_car()
+        if car.distance(frog) < 20:
+            game_on = False
 
     # detects successful crossing
     if frog.ycor() > 250:
