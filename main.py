@@ -1,16 +1,40 @@
-# This is a sample Python script.
+from turtle import Screen
+from frog import Frog
+from car import Car
+import time
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+screen = Screen()
+screen.setup(height=600, width=800)
+screen.title("Frogger")
+screen.tracer(0)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+frog = Frog()
+cars = []
+
+# initial traffic
+for _ in range(10):
+    cars.append(Car())
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+screen.listen()
+screen.onkey(frog.jump, "Up")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+game_on = True
+
+while game_on:
+    screen.update()
+    time.sleep(cars[0].car_speed)
+    for car in cars:
+        car.move_car()
+
+    # detects successful crossing
+    if frog.ycor() > 250:
+        frog.restart()
+        cars.append(Car())
+        for car in cars:
+            car.speed_up()
+
+
+
+screen.exitonclick()
